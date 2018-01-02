@@ -187,6 +187,38 @@ Page({
 
 > Object 返回网络请求对象
 
+### offset - 以偏移量的形式实现分页加载
+
+##### 参数
+
+| param name | type | explain |
+| --- | --- | --- |
+| [offset] | int | 偏移量条数 |
+| [limitName] | string | 页数请求的参数名 |
+| [offsetName] | string | 每页条数请求的参数名 |
+
+##### 返回值
+
+> Object 返回网络请求对象
+
+### pagingWhere - 设置分页条件，用于判断是否还有下一页的数据
+
+> 如果服务端响应的json数据格式为以下格式，则不需要使用此函数来构造条件。  
+{  
+    data: [...],  
+    totalPage: 10  
+}
+
+##### 参数
+
+| param name | type | explain |
+| --- | --- | --- |
+| func | function | 设置分页条件的函数 |
+
+##### 返回值
+
+> Object 返回网络请求对象
+
 ### pagingRefresh - 分页刷新
 
 ##### 参数
@@ -490,6 +522,7 @@ Page({
 * **timeParamName：** 签名时间戳提交的参数名
 * **pageParamName：** 页数请求的参数名
 * **pageSizeParamName：** 每页条数请求的参数名
+* **isOffset：** 分页是否是以offset的形式
 * **domain：** 访问的域名
 * **commonUrl：** 地址库中的地址相同的url部分
 * **urlBase：** 供请求框架选择的地址库，使用对象的方式存储
