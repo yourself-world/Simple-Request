@@ -528,3 +528,5 @@ Page({
 * **urlBase：** 供请求框架选择的地址库，使用对象的方式存储
 * **urlBase.item.url：** 地址模块的url地址,拼接效果:domain+commonUrl+urlBase.item.url
 * **urlBase.item.param：** 请求所需的参数列表,数组类型
+
+完美
