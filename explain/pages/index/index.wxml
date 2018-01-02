@@ -1,0 +1,18 @@
+<view class='movie-list clearfix'>
+	<navigator class='movie-item' url='../detail/detail?id={{item.id}}' wx:for='{{movies}}'>
+		<view class='cover'><image src='{{item.images.small}}'></image></view>
+		<view class='movie-title texthide'>{{item.title}}</view>
+		<view class='rating'>
+			<block wx:if='{{item.rating.average}}'>
+				<view class='star-level'>
+					<view class='star activ'></view>
+					<view class='star trans' style='background-position-x:-{{item.rating.average/10*100}}rpx;left:{{item.rating.average/10*100}}rpx;'></view>
+				</view>
+				<text class='average'>{{item.rating.average}}</text>
+			</block>
+			<block wx:else>
+				<text class='not-average'>暂无评分</text>
+			</block>
+		</view>
+	</navigator>
+</view>

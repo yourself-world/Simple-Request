@@ -1,0 +1,32 @@
+.movie-list{
+	padding: 0 45rpx;
+}
+.movie-list .movie-item{
+	width: 180rpx;
+	height: 350rpx;
+	float: left;
+	margin-bottom: 60rpx;
+	margin-right: 60rpx;
+	text-align: center;
+}
+.movie-list .movie-item:nth-child(3n){
+	margin-right: 0;
+}
+.movie-list .cover image{
+	width: 180rpx;
+	height: 260rpx;
+}
+.movie-list .movie-title{
+	font-size: 26rpx;
+	color: #494949;
+}
+.movie-list .rating{
+	margin-top: 10rpx;
+	color: #9b9b9b;
+	font-size: 24rpx;
+}
+.movie-list .average{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10rpx;
+}
