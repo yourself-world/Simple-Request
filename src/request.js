@@ -41,6 +41,34 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 		PageObject 			= PageObject || {};
 
 	/**
+	 * 判断一个变量是否为空
+	 * @param  {[type]}  variable [description]
+	 * @return {Boolean}          [description]
+	 */
+	function isEmpty(variable) {
+		var varType = typeof (variable);
+		if (varType == 'undefined') {
+			return true;
+		} else {
+			switch (varType) {
+				case 'string':
+					return variable.length == 0;
+				case 'boolean':
+					return !variable;
+				case 'number':
+					return !variable;
+				case 'object': //对象,数据,null
+					for (var name in variable) {
+						return false;
+					}
+					return true;
+				default:
+					return false;
+			}
+		}
+	}
+
+	/**
 	 * 数据分配解析
 	 * @param  {[type]} resData 响应的数据
 	 * @return {[type]}         [description]
@@ -92,6 +120,12 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 			for(var index in assignList){
 				var item = assignList[index];
 				var findData = loopFind(resData, item.name);
+				if((typeof item.alias == 'string') && (item.alias.indexOf('@') === 0)){
+					if(isEmpty(findData)){
+						continue;
+					}
+					item.alias = item.alias.substr(1);
+				}
 				pageData = loopSet(pageData, findData, item.alias, item.merge);
 			}
 			PageObject.setData(pageData); //将设置好的数据分配到页面中
@@ -531,13 +565,16 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 	 */
 	that.assign = function(){
 		var merge = (arguments[arguments.length-1] === true)? true : false; //分配的数据是覆盖还合并
+		var emptyNotSet = (arguments[arguments.length-1] === 0)? true : false; //如果返回的数据为空时则不设置
 		for (var index in arguments) {
 			var item = arguments[index];
 			if(item && typeof item == 'string'){
 				var format = item.split(':');
+				var alias = format[1] || format[0];
+				alias = (emptyNotSet && alias.indexOf('@') !== 0)? '@'+alias : alias;
 				assignList.push({
 					name: format[0],
-					alias: format[1] || format[0],
+					alias: alias,
 					merge: merge
 				});
 			}

@@ -383,7 +383,8 @@ Page({
     json数据成员属性名:页面data成员属性名  
 例子:  
 	 **wx.SQ('demo', this).assign('data:pageData', 'data.child:pageData', 'data.child:pageData.child').post();**  
-*最后一个参数如果传true则会和原有数据进行concat操作，反之会覆盖*
+最后一个参数如果传true则会和原有数据进行concat操作，反之会覆盖。  
+最后一个参数如果传0，当返回的数据为空时不会进行赋值。如果需要对单独的健进行数据空不赋值可给每个键加一个@符号。例：data:@pageData;
 
 ##### 返回值
 
