@@ -465,7 +465,8 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 	 */
 	that.param = function(paramName, paramValue){
 		Request.data = Request.data || {};
-		Request.data[paramName] = paramValue;
+		var floatReg = /^[-\+]?\d+(\.\d+)$/;
+		Request.data[paramName] = (typeof(paramValue) == 'number' && floatReg.test(paramValue))? paramValue.toString() : paramValue;
 		return that;
 	}
 
