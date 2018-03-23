@@ -7,6 +7,7 @@
 var Config = require('config.js') || {}; //框架配置
 var hexMd5 = require('md5.js'); //md5加密
 var requestQueue = []; //请求队列
+var loadingStyleQueue = []; //加载样式队列
 var requestCookie = ''; //请求响应的cookie
 
 /**
@@ -36,7 +37,7 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 		requestSuccess		= null,
 		requestFail			= null,
 		requestComplete		= null,
-		loadingStyle		= 0,
+		loadingStyle		= 1,
 		loadingText			= '玩命加载中';
 		PageObject 			= PageObject || {};
 
@@ -194,8 +195,10 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 	function showLoading(){
 		if(loadingStyle === 1){
 			wx.showNavigationBarLoading(); //显示导航条加载动画
+			loadingStyleQueue.push(loadingStyle); //将加载样式加入列队
 		}else if(loadingStyle === 0){
 			wx.showLoading({ title: loadingText }); //显示加载提示框
+			loadingStyleQueue.push(loadingStyle); //将加载样式加入列队
 		}
 	}
 
@@ -204,8 +207,13 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 	 * @return {[type]} [description]
 	 */
 	function hideLoading(){
-		wx.hideNavigationBarLoading(); //隐藏导航条加载动画
-		wx.hideLoading(); //隐藏加载提示框
+		if(loadingStyleQueue.indexOf(1) >= 0){
+			wx.hideNavigationBarLoading(); //隐藏导航条加载动画
+		}
+		if(loadingStyleQueue.indexOf(0) >= 0){
+			wx.hideLoading(); //隐藏加载提示框
+		}
+		loadingStyleQueue = []; //清空加载样式队列
 	}
 
 	/**
@@ -599,6 +607,7 @@ wx.SQ = wx.SQ || function(requestUrl, PageObject){
 		} else if (typeof style == 'number') {
 			loadingStyle = style? 1 : 0;
 		} else {
+			loadingStyle = 0;
 			loadingText = style;
 		}
 		return that;
